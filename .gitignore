@@ -88,18 +88,3 @@ fabric.properties
 
 build/
 
-.idea/.gitignore
-.idea/backyard.iml
-.idea/misc.xml
-.idea/modules.xml
-.idea/vcs.xml
-Taskfile.yml
-assets/
-controllers/
-go.mod
-go.sum
-main.go
-models/
-public/
-template_test.go
-views/

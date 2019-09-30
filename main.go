@@ -9,7 +9,6 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
-	"time"
 )
 
 type User struct {
@@ -92,11 +91,7 @@ func main() {
 
 func hello(c echo.Context) error {
 	data := models.Home{
-		SiteName:    "My Great Site",
-		SiteURL:     "https://github.com/neefrankie",
-		Footer:      models.Footer,
-		CurrentYear: time.Now().Year(),
-		Version:     "0.0.1",
+		UIBase: models.NewUIBase(),
 	}
 
 	return c.Render(http.StatusOK, "index.html", data)

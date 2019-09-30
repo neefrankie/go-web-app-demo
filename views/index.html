@@ -9,32 +9,35 @@
                 {{range .Inputs}}
                 <div class="form-group">
                     {{if .Label }}
-                    <label class="form-label" for="{{ID}}">{{.Label}}</label>
+                    <label class="form-label" for="{{.ID}}">{{.Label}}</label>
                     {{end}}
                     <input class="form-control"
                            type="{{.Type}}"
                            id="{{.ID}}"
-                           name="{{input.name}}"
-                           {{if .Value}}
+                           name="{{.Name}}"
+                           {{if .Value -}}
                            value="{{.Value}}"
-                           {{end}}
+                           {{- end}}
                            placeholder="{{.Placeholder}}"
-                           {{if MinLength}}
+                           {{if .MinLength -}}
                            minlength="{{.MinLength}}"
-                           {{end}}
-                           {{if MaxLength}}
+                           {{- end}}
+                           {{if .MaxLength -}}
                            maxlength="{{.MaxLength}}"
-                           {{end}}
-                           {{if Required}}
+                           {{- end}}
+                           {{if .Required -}}
                            required
-                           {{end}}
-                           {{if .DataList}}
+                           {{- end}}
+                            {{if .ReadOnly -}}
+                            readonly
+                            {{- end}}
+                           {{if .DataList.ID -}}
                            list="{{.DataList.ID}}"
-                           {{end}}>
+                           {{- end}}>
 
-                    {{if .DataList}}
+                    {{if .DataList.ID}}
                     <datalist id="{{.DataList.ID}}">
-                        {{range .DataList.Option}}
+                        {{range .DataList.Options}}
                         <option value="{{.}}">{{.}}</option>
                         {{end}}
                     </datalist>
@@ -44,7 +47,7 @@
                     <small class="form-text text-muted">{{.Desc}}</small>
                     {{end}}
 
-                    {{if .Error}}
+                    {{if .ErrMsg}}
                     <div class="form-errortext">{{.Error}}</div>
                     {{end}}
                 </div>
@@ -59,7 +62,7 @@
                            checked>
                     <label for="rememberMe">记住我</label>
 
-                    <a class="float-right" href="{{ PwResetLink }}">忘记密码?</a>
+                    <a class="float-right" href="{{ .PwResetLink }}">忘记密码?</a>
                 </div>
 
                 <button

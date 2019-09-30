@@ -35,8 +35,8 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	e.GET("/", hello)
-	e.GET("/hello", func(c echo.Context) error {
+	e.GET("/", homePage)
+	e.GET("/homePage", func(c echo.Context) error {
 		return c.Render(http.StatusOK, "index.html", "World")
 	})
 
@@ -89,9 +89,31 @@ func main() {
 	e.Logger.Fatal(e.Start(":1323"))
 }
 
-func hello(c echo.Context) error {
+func homePage(c echo.Context) error {
 	data := models.Home{
 		UIBase: models.NewUIBase(),
+		Inputs: []models.TextInput{
+			{
+				Label:       "邮箱",
+				ID:          "email",
+				Type:        "email",
+				Name:        "credentials[email]",
+				Value:       "",
+				Placeholder: "电子邮箱",
+				MaxLength:   "64",
+				Required:    true,
+			},
+			{
+				Label:       "密码",
+				ID:          "password",
+				Type:        "password",
+				Name:        "credentials[password]",
+				Placeholder: "密码",
+				MaxLength:   "64",
+				Required:    true,
+			},
+		},
+		PwResetLink: "/password-reset",
 	}
 
 	return c.Render(http.StatusOK, "index.html", data)

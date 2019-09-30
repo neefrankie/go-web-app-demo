@@ -8,7 +8,6 @@ import (
 	"strings"
 	"testing"
 	"text/template"
-	"time"
 )
 
 const (
@@ -83,18 +82,9 @@ func TestDirectory(t *testing.T) {
 	t.Logf("Current paths: %v", paths)
 }
 
-type TemplateData struct {
-	SiteName string
-	SiteURL  string
-}
-
 func TestTemplateToHTML(t *testing.T) {
 	data := models.Home{
-		SiteName:    "My Great Site",
-		SiteURL:     "https://github.com/neefrankie",
-		Footer:      models.Footer,
-		CurrentYear: time.Now().Year(),
-		Version:     "0.0.1",
+		UIBase: models.NewUIBase(),
 	}
 
 	tmpl, err := ParseDirectory("./views")

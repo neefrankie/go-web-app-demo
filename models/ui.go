@@ -22,4 +22,6 @@ func NewUIBase() UIBase {
 
 type Home struct {
 	UIBase
+	Inputs      []TextInput
+	PwResetLink string
 }

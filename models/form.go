@@ -1,6 +1,8 @@
 package models
 
 type DataList struct {
+	ID      string
+	Options []string
 }
 
 type TextInput struct {

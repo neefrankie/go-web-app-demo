@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
-	"gitlab.com/ftchinese/backyard/models"
+	"gitlab.com/ftchinese/backyard/ui"
 	"html/template"
 	"io"
 	"net/http"
@@ -36,9 +36,7 @@ func main() {
 	e.Use(middleware.Recover())
 
 	e.GET("/", homePage)
-	e.GET("/homePage", func(c echo.Context) error {
-		return c.Render(http.StatusOK, "index.html", "World")
-	})
+	e.GET("/audio", audioPage)
 
 	track := func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
@@ -90,33 +88,13 @@ func main() {
 }
 
 func homePage(c echo.Context) error {
-	data := models.Home{
-		UIBase: models.NewUIBase(),
-		Inputs: []models.TextInput{
-			{
-				Label:       "邮箱",
-				ID:          "email",
-				Type:        "email",
-				Name:        "credentials[email]",
-				Value:       "",
-				Placeholder: "电子邮箱",
-				MaxLength:   "64",
-				Required:    true,
-			},
-			{
-				Label:       "密码",
-				ID:          "password",
-				Type:        "password",
-				Name:        "credentials[password]",
-				Placeholder: "密码",
-				MaxLength:   "64",
-				Required:    true,
-			},
-		},
-		PwResetLink: "/password-reset",
-	}
+	data := ui.BuildHomeUI()
 
 	return c.Render(http.StatusOK, "index.html", data)
+}
+
+func audioPage(c echo.Context) error {
+	return c.Render(http.StatusOK, "interactive.html", ui.BuildAudioUI())
 }
 
 // Recursively get all file paths in directory, including sub-directories.

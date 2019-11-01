@@ -1,0 +1,17 @@
+{{template "layout" .}}
+{{define "content"}}
+    <div class="d-flex justify-content-between mb-3 border-bottom">
+        <h2>{{.Heading}}</h2>
+    </div>
+
+    <form accept-charset="UTF-8" method="post">
+        {{range .Form.Inputs}}
+            <div class="form-group">
+                {{template "text_input.html" .}}
+            </div>
+        {{end}}
+
+        {{template "form_button.html" .}}
+
+    </form>
+{{end}}

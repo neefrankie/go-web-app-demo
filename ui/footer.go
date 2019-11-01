@@ -1,4 +1,4 @@
-package models
+package ui
 
 type FooterItem struct {
 	Text string

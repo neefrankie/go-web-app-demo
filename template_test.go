@@ -1,7 +1,7 @@
 package main
 
 import (
-	"gitlab.com/ftchinese/backyard/models"
+	"gitlab.com/ftchinese/backyard/ui"
 	"log"
 	"os"
 	"path/filepath"
@@ -83,9 +83,9 @@ func TestDirectory(t *testing.T) {
 }
 
 func TestTemplateToHTML(t *testing.T) {
-	data := models.Home{
-		UIBase: models.NewUIBase(),
-		Inputs: []models.TextInput{
+	data := ui.Home{
+		BaseUI: ui.NewUIBase(),
+		Inputs: []ui.Input{
 			{
 				Label:       "邮箱",
 				ID:          "email",

@@ -1,0 +1,66 @@
+{{if .Label}}
+<label class="form-label" for="{{.ID}}">{{.Label}}</label>
+{{end}}
+
+{{if .Type.IsTextArea}}
+<textarea
+        class="form-control"
+        id="{{.ID}}"
+        name="{{.Name}}"
+        {{if .MaxLength}}
+        maxlength="{{.MaxLength}}"
+        {{end}}
+        rows="3">{{.Value}}</textarea>
+
+{{else}}
+
+<input class="form-control"
+       id="{{.ID}}"
+       type="{{.Type.String}}"
+       name="{{.Name}}"
+       {{if .Value -}}
+       value="{{.Value}}"
+       {{end}}
+       {{if .Pattern -}}
+       pattern="{{.Pattern}}"
+       {{end}}
+       placeholder="{{.Placeholder}}"
+       {{if .MinLength -}}
+       minlength="{{.MinLength}}"
+       {{end}}
+       {{if .MaxLength -}}
+       maxlength="{{.MaxLength}}"
+       {{end}}
+       {{if .Required -}}
+       required
+       {{end}}
+       {{if .ReadOnly -}}
+       readonly
+       {{end}}
+       {{if .DataList.ID -}}
+       list="{{.DataList.ID -}}"
+       {{end}}
+       {{if .DataComponent}}
+       data-component="{{.DataComponent}}"
+       {{end}}
+       {{if .DataTarget}}
+       data-target="{{.DataTarget}}"
+       {{end}}>
+
+{{if .DataList.ID}}
+<datalist id="{{.DatList.ID}}">
+    {{range .DataList.Options}}
+    <option value="{{.}}">{{.}}</option>
+    {{end}}
+</datalist>
+{{end}}
+
+{{if .Desc}}
+<small class="form-text text-muted">{{.Desc}}</small>
+{{end}}
+
+{{if .ErrMsg}}
+<div class="form-errortext">{{.ErrMsg}}</div>
+{{end}}
+
+{{end}}

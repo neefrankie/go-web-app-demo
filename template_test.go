@@ -84,7 +84,7 @@ func TestDirectory(t *testing.T) {
 
 func TestTemplateToHTML(t *testing.T) {
 	data := ui.Home{
-		BaseUI: ui.NewUIBase(),
+		BaseUI: ui.NewBaseUI(),
 		Inputs: []ui.Input{
 			{
 				Label:       "邮箱",
@@ -120,8 +120,4 @@ func TestTemplateToHTML(t *testing.T) {
 		t.Logf("Template name %s", v.Name())
 	}
 
-	err = tmpl.ExecuteTemplate(os.Stdout, "index.html", &data)
-	if err != nil {
-		t.Error(err)
-	}
 }

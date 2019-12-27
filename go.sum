@@ -1,5 +1,6 @@
 github.com/FTChinese/go-rest v0.0.18 h1:k32YSvMcbwlZlS9e3OnWkbCQE/kRnA0Iq7IlYz18B1g=
 github.com/FTChinese/go-rest v0.0.18/go.mod h1:mNniA0pMlPDtAr9UokwRNo0yDFW0hP/R7G1240MjDp4=
+github.com/FTChinese/go-rest v0.3.1/go.mod h1:maZLcH5Os/34qV4Fs2cw9Di0lgECYZ6bpqSLQx2h/Dc=
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/dgrijalva/jwt-go v3.2.0+incompatible h1:7qlOGliEKZXTDg6OTjfoBKDXWrumCAMpl/TFQ4/5kLM=
@@ -7,6 +8,8 @@ github.com/dgrijalva/jwt-go v3.2.0+incompatible/go.mod h1:E3ru+11k8xSBh+hMPgOLZm
 github.com/go-mail/mail v2.3.1+incompatible/go.mod h1:VPWjmmNyRsWXQZHVHT3g0YbIINUkSmuKOiLIDkWbL6M=
 github.com/go-sql-driver/mysql v1.4.1 h1:g24URVg0OFbNUTx9qqY1IRZ9D9z3iPyi5zKhQZpNwpA=
 github.com/go-sql-driver/mysql v1.4.1/go.mod h1:zAC/RDZ24gD3HViQzih4MyKcchzm+sOG5ZlKdlhCg5w=
+github.com/gorilla/schema v1.1.0 h1:CamqUDOFUBqzrvxuz2vEwo8+SUdwsluFh7IlzJh30LY=
+github.com/gorilla/schema v1.1.0/go.mod h1:kgLaKoK1FELgZqMAVxx/5cbj0kT+57qxUrAlIO2eleU=
 github.com/guregu/null v3.4.0+incompatible h1:a4mw37gBO7ypcBlTJeZGuMpSxxFTV9qFfFKgWxQSGaM=
 github.com/guregu/null v3.4.0+incompatible/go.mod h1:ePGpQaN9cw0tj45IR5E5ehMvsFlLlQZAkkOXZurJ3NM=
 github.com/labstack/echo v3.3.10+incompatible h1:pGRcYk231ExFAyoAjAfD85kQzRJCRI8bbnE7CX5OEgg=

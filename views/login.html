@@ -1,0 +1,19 @@
+{{template "layout" .}}
+{{define "main"}}
+    <div class="row justify-content-center">
+        <div class="col-md-7 col-lg-5 col-xl-4">
+            <div class="mt-4">
+                <h4 class="text-center">CMS Login</h4>
+                <form accept-charset="UTF-8" method="post">
+                    {{range .Form.Inputs}}
+                        <div class="form-group">
+                            {{template  "text_input.html" .}}
+                        </div>
+                    {{end}}
+
+                    {{template "form_button.html" .}}
+                </form>
+            </div>
+        </div>
+    </div>
+{{end}}

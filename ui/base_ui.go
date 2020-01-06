@@ -18,7 +18,6 @@ func NewBaseUI() BaseUI {
 	return BaseUI{
 		SiteName:    "My Great Site",
 		SiteURL:     "https://github.com/neefrankie",
-		Footer:      Footer,
 		CurrentYear: time.Now().Year(),
 		Version:     "0.0.1",
 	}

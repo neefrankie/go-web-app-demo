@@ -35,9 +35,8 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
-	loginGroup := e.Group("/login")
-	loginGroup.GET("/", controllers.GetLogIn)
-	loginGroup.POST("/", controllers.PostLogIn)
+	e.GET("/login", controllers.GetLogIn)
+	e.POST("/login", controllers.PostLogIn)
 
 	e.GET("/audio", controllers.AudioPage)
 

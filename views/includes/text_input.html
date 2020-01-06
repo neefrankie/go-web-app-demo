@@ -2,7 +2,7 @@
 <label class="form-label" for="{{.ID}}">{{.Label}}</label>
 {{end}}
 
-{{if .Type.IsTextArea}}
+{{ if .Type.IsTextArea }}
 <textarea
         class="form-control"
         id="{{.ID}}"
@@ -12,55 +12,64 @@
         {{end}}
         rows="3">{{.Value}}</textarea>
 
-{{else}}
+{{ else }}
 
-<input class="form-control"
+    <input class="form-control"
        id="{{.ID}}"
        type="{{.Type.String}}"
        name="{{.Name}}"
-       {{if .Value -}}
-       value="{{.Value}}"
+       {{with .Value -}}
+       value="{{.}}"
        {{end}}
-       {{if .Pattern -}}
-       pattern="{{.Pattern}}"
+
+       {{with .Pattern -}}
+       pattern="{{.}}"
        {{end}}
+
        placeholder="{{.Placeholder}}"
+
        {{if .MinLength -}}
        minlength="{{.MinLength}}"
        {{end}}
+
        {{if .MaxLength -}}
        maxlength="{{.MaxLength}}"
        {{end}}
+
        {{if .Required -}}
        required
        {{end}}
+
        {{if .ReadOnly -}}
        readonly
        {{end}}
-       {{if .DataList.ID -}}
-       list="{{.DataList.ID -}}"
+
+       {{with .DataList.ID -}}
+       list="{{. -}}"
        {{end}}
-       {{if .DataComponent}}
-       data-component="{{.DataComponent}}"
+
+       {{with .DataComponent}}
+       data-component="{{.}}"
        {{end}}
-       {{if .DataTarget}}
-       data-target="{{.DataTarget}}"
+
+       {{with .DataTarget}}
+       data-target="{{.}}"
        {{end}}>
 
-{{if .DataList.ID}}
-<datalist id="{{.DatList.ID}}">
-    {{range .DataList.Options}}
-    <option value="{{.}}">{{.}}</option>
-    {{end}}
-</datalist>
-{{end}}
+    {{ if .DataList.ID }}
+    <datalist id="{{.DatList.ID}}">
+        {{ range .DataList.Options }}
+        <option value="{{.}}">{{.}}</option>
+        {{ end }}
+    </datalist>
+    {{ end }}
 
-{{if .Desc}}
-<small class="form-text text-muted">{{.Desc}}</small>
-{{end}}
+    {{ with .Desc }}
+    <small class="form-text text-muted">{{.}}</small>
+    {{ end }}
 
-{{if .ErrMsg}}
-<div class="form-errortext">{{.ErrMsg}}</div>
-{{end}}
+    {{ with .ErrMsg }}
+    <div class="form-errortext">{{.}}</div>
+    {{ end }}
 
 {{end}}

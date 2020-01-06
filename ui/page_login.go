@@ -9,14 +9,14 @@ type LoginUI struct {
 	PwResetLink string
 }
 
-func BuildLoginUI(state LoginFormState) LoginUI {
+func BuildLoginUI(formData models.Login) LoginUI {
 	return LoginUI{
 		BaseUI:  NewBaseUI(),
 		Heading: "CMS Login",
 		Form: Form{
 			Disabled: false,
 			Action:   "",
-			Inputs:   buildLoginInputs(state),
+			Inputs:   buildLoginInputs(formData),
 			SubmitBtn: SubmitButton{
 				DisableWith: "Logging in...",
 				Text:        "Login",
@@ -26,33 +26,28 @@ func BuildLoginUI(state LoginFormState) LoginUI {
 	}
 }
 
-type LoginFormState struct {
-	FormData models.Login
-	Invalid  models.Login
-}
-
-func buildLoginInputs(state LoginFormState) []Input {
+func buildLoginInputs(formData models.Login) []Input {
 	return []Input{
 		{
 			Label:       "User Name",
 			ID:          "userName",
 			Type:        InputTypeText,
-			Name:        "login[userName]",
-			Value:       state.FormData.UserName,
+			Name:        "userName",
+			Value:       formData.UserName,
 			Placeholder: "User name",
 			MaxLength:   64,
 			Required:    true,
-			ErrMsg:      state.Invalid.UserName,
+			ErrMsg:      formData.Errors["UserName"],
 		},
 		{
 			Label:       "Password",
 			ID:          "password",
 			Type:        InputTypePassword,
-			Name:        "login[password]",
+			Name:        "password",
 			Placeholder: "Password",
 			MaxLength:   64,
 			Required:    true,
-			ErrMsg:      state.Invalid.Password,
+			ErrMsg:      formData.Errors["Password"],
 		},
 	}
 }

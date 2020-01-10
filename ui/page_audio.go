@@ -1,16 +1,10 @@
 package ui
 
-type AudioArticle struct {
-	BaseUI
-	Heading string
-	Form    Form
-}
+import "github.com/flosch/pongo2"
 
-func BuildAudioUI() AudioArticle {
-	return AudioArticle{
-		BaseUI:  NewBaseUI(),
-		Heading: "New Audio Article",
-		Form: Form{
+func BuildAudioUI() pongo2.Context {
+	return pongo2.Context{
+		"form": Form{
 			Disabled: false,
 			Action:   "",
 			Inputs: []Input{

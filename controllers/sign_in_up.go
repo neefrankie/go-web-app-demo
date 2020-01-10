@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"github.com/labstack/echo"
+	"github.com/labstack/echo/v4"
 	"gitlab.com/ftchinese/backyard/models"
 	"gitlab.com/ftchinese/backyard/ui"
 	"net/http"
@@ -26,5 +26,5 @@ func PostLogIn(c echo.Context) error {
 		return c.Render(http.StatusOK, "login.html", data)
 	}
 
-	return c.JSON(http.StatusOK, l)
+	return c.Redirect(http.StatusFound, "/")
 }

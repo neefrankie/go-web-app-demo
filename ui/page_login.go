@@ -1,32 +1,27 @@
 package ui
 
-import "gitlab.com/ftchinese/backyard/models"
+import (
+	"github.com/flosch/pongo2"
+	"gitlab.com/ftchinese/backyard/models"
+)
 
-type LoginUI struct {
-	BaseUI
-	Heading     string
-	Form        Form
-	PwResetLink string
-}
-
-func BuildLoginUI(formData models.Login) LoginUI {
-	return LoginUI{
-		BaseUI:  NewBaseUI(),
-		Heading: "CMS Login",
-		Form: Form{
+func BuildLoginUI(formData models.Login) pongo2.Context {
+	return pongo2.Context{
+		"form": Form{
 			Disabled: false,
 			Action:   "",
-			Inputs:   buildLoginInputs(formData),
+			Inputs:   BuildLoginInputs(formData),
 			SubmitBtn: SubmitButton{
 				DisableWith: "Logging in...",
 				Text:        "Login",
 			},
+			CancelBtn: Anchor{},
+			DeleteBtn: Anchor{},
 		},
-		PwResetLink: "/password-reset",
 	}
 }
 
-func buildLoginInputs(formData models.Login) []Input {
+func BuildLoginInputs(formData models.Login) []Input {
 	return []Input{
 		{
 			Label:       "User Name",

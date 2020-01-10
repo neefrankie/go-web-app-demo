@@ -1,6 +1,8 @@
 package main
 
 import (
+	"github.com/flosch/pongo2"
+	"gitlab.com/ftchinese/backyard/models"
 	"gitlab.com/ftchinese/backyard/ui"
 	"log"
 	"os"
@@ -82,42 +84,44 @@ func TestDirectory(t *testing.T) {
 	t.Logf("Current paths: %v", paths)
 }
 
-func TestTemplateToHTML(t *testing.T) {
-	data := ui.Home{
-		BaseUI: ui.NewBaseUI(),
-		Inputs: []ui.Input{
-			{
-				Label:       "邮箱",
-				ID:          "email",
-				Type:        "email",
-				Name:        "credentials[email]",
-				Value:       "",
-				Placeholder: "电子邮箱",
-				MaxLength:   "64",
-				Required:    true,
-			},
-			{
-				Label:       "密码",
-				ID:          "password",
-				Type:        "password",
-				Name:        "credentials[password]",
-				Placeholder: "密码",
-				MaxLength:   "64",
-				Required:    true,
-			},
-		},
-		PwResetLink: "/password-reset",
-	}
-
+func TestViews(t *testing.T) {
 	tmpl, err := ParseDirectory("./views")
 	if err != nil {
 		t.Error(err)
 	}
 
-	t.Logf("Tempalete name %s", tmpl.Name())
+	t.Logf("%+v", tmpl.DefinedTemplates())
 
 	for _, v := range tmpl.Templates() {
-		t.Logf("Template name %s", v.Name())
-	}
+		t.Logf("%+v\n", v.Name())
 
+		err := v.Execute(os.Stdout, ui.NewBaseUI())
+
+		if err != nil {
+			t.Error(err)
+		}
+	}
+}
+
+func TestPongo(t *testing.T) {
+	pongo2.DefaultLoader.SetBaseDir("templates")
+	var tplExample = pongo2.Must(pongo2.FromFile("login.html"))
+
+	err := tplExample.ExecuteWriter(pongo2.Context{
+		"form": ui.Form{
+			Disabled: false,
+			Action:   "",
+			Inputs:   ui.BuildLoginInputs(models.Login{}),
+			SubmitBtn: ui.SubmitButton{
+				DisableWith: "Logging in...",
+				Text:        "Login",
+			},
+			CancelBtn: ui.Anchor{},
+			DeleteBtn: ui.Anchor{},
+		},
+	}, os.Stdout)
+
+	if err != nil {
+		t.Error(err)
+	}
 }

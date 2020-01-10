@@ -1,9 +1,12 @@
 package main
 
 import (
-	"github.com/labstack/echo"
-	"github.com/labstack/echo/middleware"
+	"errors"
+	"github.com/flosch/pongo2"
+	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"gitlab.com/ftchinese/backyard/controllers"
+	"gitlab.com/ftchinese/backyard/ui"
 	"html/template"
 	"io"
 	"net/http"
@@ -16,25 +19,51 @@ type User struct {
 	Email string `json:"email" xml:"email" form:"email" query:"email"`
 }
 
-type Template struct {
-	templates *template.Template
+type Renderer struct {
+	Debug bool
 }
 
-func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
+func (r Renderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
+	var ctx = pongo2.Context{}
+
+	if data != nil {
+		var ok bool
+		ctx, ok = data.(pongo2.Context)
+		if !ok {
+			return errors.New("no pongo2.Context data was passed")
+		}
+	}
+
+	var t *pongo2.Template
+	var err error
+
+	if r.Debug {
+		t, err = pongo2.FromFile(name)
+	} else {
+		t, err = pongo2.FromCache(name)
+	}
+
+	if err != nil {
+		return err
+	}
+
+	ctx["env"] = ui.NewBaseUI()
+
+	return t.ExecuteWriter(ctx, w)
 }
 
 func main() {
-	t := &Template{
-		templates: template.Must(ParseDirectory("./views")),
+	if err := pongo2.DefaultLoader.SetBaseDir("templates"); err != nil {
+		os.Exit(1)
 	}
 
 	e := echo.New()
-	e.Renderer = t
+	e.Renderer = Renderer{Debug: true}
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	e.GET("/", controllers.GetHome)
 	e.GET("/login", controllers.GetLogIn)
 	e.POST("/login", controllers.PostLogIn)
 

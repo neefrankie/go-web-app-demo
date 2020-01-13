@@ -30,4 +30,4 @@ mkbuild :
 
 clean :
 	go clean -x
-	rm build/*
+	rm build/* && rm rice-box.go

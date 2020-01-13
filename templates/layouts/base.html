@@ -13,7 +13,12 @@
     <link href="{{iconUrl}}/favicon.ico" type="image/x-icon" rel="shortcut icon" />
 
     <title>{% block title %}Superyard{% endblock %} - FTC CMS</title>
+    {% if env.Debug %}
+    <link rel="stylesheet" href="/style/bootstrap.css">
+    <link rel="stylesheet" href="/style/main.css">
+    {% else %}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    {% endif %}
 </head>
 
 <body>
@@ -60,8 +65,12 @@
     </div>
 </footer>
 
+{% if env.Debug %}
+<script src="/script/bootstrap-native-v4.js"></script>
+<script src="/script/main.js"></script>
+{% else %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.27/bootstrap-native-v4.min.js"></script>
-
+{% endif %}
 
 </body>
 

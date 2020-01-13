@@ -1,17 +1,16 @@
 package main
 
 import (
-	"errors"
-	"github.com/flosch/pongo2"
+	"flag"
+	"fmt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 	"gitlab.com/ftchinese/backyard/controllers"
-	"gitlab.com/ftchinese/backyard/ui"
 	"html/template"
-	"io"
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 type User struct {
@@ -19,46 +18,43 @@ type User struct {
 	Email string `json:"email" xml:"email" form:"email" query:"email"`
 }
 
-type Renderer struct {
-	Debug bool
-}
+var (
+	isProd  bool
+	version string
+	build   string
+	config  Config
+)
 
-func (r Renderer) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	var ctx = pongo2.Context{}
+func init() {
+	flag.BoolVar(&isProd, "production", false, "Indicate productions environment if present")
+	var v = flag.Bool("v", false, "print current version")
 
-	if data != nil {
-		var ok bool
-		ctx, ok = data.(pongo2.Context)
-		if !ok {
-			return errors.New("no pongo2.Context data was passed")
-		}
+	flag.Parse()
+
+	if *v {
+		fmt.Printf("%s\nBuild at %s\n", version, build)
+		os.Exit(0)
 	}
 
-	var t *pongo2.Template
-	var err error
-
-	if r.Debug {
-		t, err = pongo2.FromFile(name)
-	} else {
-		t, err = pongo2.FromCache(name)
+	config = Config{
+		Debug:   !isProd,
+		Version: version,
+		Year:    time.Now().Year(),
 	}
-
-	if err != nil {
-		return err
-	}
-
-	ctx["env"] = ui.NewBaseUI()
-
-	return t.ExecuteWriter(ctx, w)
 }
 
 func main() {
-	if err := pongo2.DefaultLoader.SetBaseDir("templates"); err != nil {
-		os.Exit(1)
+	e := echo.New()
+	r, err := NewRenderer(config)
+	if err != nil {
+		panic(err)
 	}
 
-	e := echo.New()
-	e.Renderer = Renderer{Debug: true}
+	e.Renderer = r
+
+	if !isProd {
+		e.Static("/", "build/dev")
+	}
 
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())

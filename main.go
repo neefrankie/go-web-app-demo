@@ -37,7 +37,6 @@ func init() {
 	config = Config{
 		Debug:   !isProd,
 		Version: version,
-		Year:    time.Now().Year(),
 	}
 
 	viper.SetConfigName("api")

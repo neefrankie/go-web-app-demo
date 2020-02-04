@@ -7,6 +7,7 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/gommon/log"
 	"io"
+	"time"
 )
 
 // Renderer is used to render pong2 templates.
@@ -73,6 +74,7 @@ func (r Renderer) Render(w io.Writer, name string, data interface{}, c echo.Cont
 		return err
 	}
 
+	config.Year = time.Now().Year()
 	ctx["env"] = r.config
 
 	return t.ExecuteWriter(ctx, w)

@@ -9,12 +9,15 @@ import (
 	"io"
 )
 
+// Renderer is used to render pong2 templates.
 type Renderer struct {
-	templateSet *pongo2.TemplateSet
+	templateSet *pongo2.TemplateSet // Load templates from filesystem or rice.
 	config      Config
 }
 
+// NewRenderer creates a new instance of Renderer based on runtime configuration.
 func NewRenderer(config Config) (Renderer, error) {
+	// In debug mode, we use pongo's default local file system loader.
 	if config.Debug {
 		log.Info("Development environment using local file system loader")
 

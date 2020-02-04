@@ -5,6 +5,8 @@ import (
 	"io"
 )
 
+// RiceTemplateLoader implements pongo2.TemplateLoader to
+// loads templates from compiled binary
 type RiceTemplateLoader struct {
 	box *rice.Box
 }

@@ -1,4 +1,4 @@
-package components
+package widget
 
 type Para struct {
 	BaseTag

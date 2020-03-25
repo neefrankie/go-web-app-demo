@@ -2,7 +2,6 @@ package components
 
 import (
 	"html/template"
-	"strings"
 )
 
 type ScaffoldData struct {
@@ -23,9 +22,7 @@ type Scaffold struct {
 }
 
 func NewScaffold(tmpl *template.Template, name string) *Scaffold {
-	return &Scaffold{
-		Setting: NewSetting(tmpl, name),
-	}
+	return &Scaffold{}
 }
 
 func (s *Scaffold) WithIcon(i string) *Scaffold {
@@ -53,43 +50,43 @@ func (s *Scaffold) WithTitle(t string) *Scaffold {
 	return s
 }
 
-func (s *Scaffold) Build() (string, error) {
-	var sb strings.Builder
-
-	data := ScaffoldData{
-		IconURL: s.iconURL,
-		Title:   s.title,
-	}
-
-	if s.navBar != nil {
-		navBar, err := s.navBar.Build()
-		if err != nil {
-			return "", err
-		}
-		data.NavBar = navBar
-	}
-
-	if s.body != nil {
-		body, err := s.body.Build()
-		if err != nil {
-			return "", err
-		}
-		data.Body = body
-	}
-
-	if s.footer != nil {
-		footer, err := s.footer.Build()
-		if err != nil {
-			return "", err
-		}
-		data.Footer = footer
-	}
-
-	err := s.tmpl.ExecuteTemplate(&sb, s.name, data)
-
-	if err != nil {
-		return "", err
-	}
-
-	return sb.String(), nil
-}
+//func (s *Scaffold) Build() (string, error) {
+//	var sb strings.Builder
+//
+//	data := ScaffoldData{
+//		IconURL: s.iconURL,
+//		Title:   s.title,
+//	}
+//
+//	if s.navBar != nil {
+//		navBar, err := s.navBar.Build()
+//		if err != nil {
+//			return "", err
+//		}
+//		data.NavBar = navBar
+//	}
+//
+//	if s.body != nil {
+//		body, err := s.body.Build()
+//		if err != nil {
+//			return "", err
+//		}
+//		data.Body = body
+//	}
+//
+//	if s.footer != nil {
+//		footer, err := s.footer.Build()
+//		if err != nil {
+//			return "", err
+//		}
+//		data.Footer = footer
+//	}
+//
+//	err := s.tmpl.ExecuteTemplate(&sb, s.name, data)
+//
+//	if err != nil {
+//		return "", err
+//	}
+//
+//	return sb.String(), nil
+//}

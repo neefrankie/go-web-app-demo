@@ -1,32 +1,28 @@
 package components
 
-import (
-	"html/template"
-	"strings"
-)
-
-type Paragraph struct {
-	Setting
-	text string
+type Para struct {
+	BaseTag
 }
 
-func NewParagraph(tmpl *template.Template, name string) *Paragraph {
-	return &Paragraph{Setting: NewSetting(tmpl, name)}
+func NewPara() *Para {
+	return &Para{}
 }
 
-func (p *Paragraph) WithText(t string) *Paragraph {
-	p.text = t
+func (p *Para) WithAttr(attr Attributes) *Para {
+	p.Attr = attr
 	return p
 }
 
-func (p *Paragraph) Build() (string, error) {
-	var sb strings.Builder
+func (p *Para) WithContent(s string) *Para {
+	p.Content = s
+	return p
+}
 
-	err := p.tmpl.ExecuteTemplate(&sb, p.name, p.text)
-
-	if err != nil {
-		return "", err
+func (p *Para) Build() string {
+	tag := Tag{
+		Name:        "p",
+		BaseTag:     p.BaseTag,
+		SelfClosing: false,
 	}
-
-	return sb.String(), nil
+	return tag.Build()
 }

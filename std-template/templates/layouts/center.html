@@ -1,0 +1,11 @@
+{% extends "layouts/base.html" %}
+
+{# This file is mostly used for situations when used has not logged in yet. #}
+
+{% block main %}
+<div class="row justify-content-center">
+    <div class="col-md-7 col-lg-6 col-xl-5">
+        {% block content %}{% endblock %}
+    </div>
+</div>
+{% endblock %}

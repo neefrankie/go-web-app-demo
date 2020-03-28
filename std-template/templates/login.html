@@ -1,0 +1,46 @@
+{% extends "layouts/center.html" %}
+
+{% block content %}
+<div class="mt-4">
+    <h4 class="text-center">登录FT中文网</h4>
+
+    {% include "partials/alert-danger.html" %}
+
+    <form method="post" id="loginForm">
+
+        {% for input in inputs %}
+        <div class="form-group">
+            {% include "partials/text-input.html" %}
+        </div>
+        {% endfor %}
+
+        <div class="form-check clearfix">
+            <input class="form-check-input"
+                   id="rememberMe"
+                   type="checkbox"
+                   name="rememberMe"
+                   value="true"
+                   checked>
+            <label for="rememberMe">记住我</label>
+
+            <a class="float-right" href="{{ pwResetLink }}">忘记密码?</a>
+        </div>
+
+        <button
+                class="btn btn-block btn-primary"
+                data-disable-with="正在登录..."
+                type="submit">登录</button>
+    </form>
+
+    <p class="text-center pt-3">还没有FT中文网账号? <a href="{{ signUpLink }}">创建</a></p>
+
+    {% if not isMobile %}
+    <div class="text-center mt-5">
+        <a href="{{ wxLoginLink }}">
+            <img src="{{ wxIcon }}" alt="微信登录">
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+{% endblock %}

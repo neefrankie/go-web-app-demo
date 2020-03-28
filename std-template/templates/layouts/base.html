@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% set iconUrl = "http://interactive.ftchinese.com/favicons" %}
+    <link rel="apple-touch-icon" sizes="180x180" href="{{iconUrl}}/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="{{iconUrl}}/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="{{iconUrl}}/apple-touch-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="{{iconUrl}}/apple-touch-icon-76x76.png">
+    <link href="{{iconUrl}}/favicon.ico" type="image/x-icon" rel="shortcut icon"/>
+
+    <title>{% block title %}用户中心{% endblock %} - FT中文网</title>
+
+    {% if env.isProduction %}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+    {% include "assets/style.html" %}
+    {% else %}
+    <link rel="stylesheet" href="/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" href="/style/main.css">
+    {% endif %}
+
+</head>
+<body>
+<header class="navbar o-header">
+    <div class="container justify-content-between">
+
+        <a class="navbar-brand" href="http://www.ftchinese.com" target="__blank">FT中文网</a>
+
+        {% block subBrand%}{% endblock %}
+
+        {% if user %}
+        <div class="dropdown d-none d-sm-block">
+            <a class="dropdown-toggle"
+               href="#"
+               role="button"
+               data-toggle="dropdown"
+               aria-haspopup="true"
+               aria-expanded="false">
+                设置
+            </a>
+
+            <div class="dropdown-menu dropdown-menu-right">
+                <a class="dropdown-item" href="{{ user.settingsLink }}">{{ user.getDisplayName() }}</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{ user.logoutLink }}">退出</a>
+            </div>
+        </div>
+        {% else %}
+        <a href="{{ globalUrl.login }}">登录</a>
+        {% endif %}
+
+        {% block headerDrawer%}{% endblock %}
+    </div>
+</header>
+
+{% block topBanner %}{% endblock %}
+
+<main class="page-content" role="main">
+    <div class="container">
+
+        {% if errors %}
+        <div class="alert alert-danger alert-dismissible fade show mt-3" role="alert">
+            <span>{{errors.message}}</span>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        {% endif %}
+
+        {% block main %}{% endblock %}
+    </div>
+</main>
+
+<footer class="o-footer o-footer--theme-dark">
+    <div class="container">
+        <div class="row">
+            {% for group in env.footer %}
+            <div class="col-6 col-md-3 col-lg-2">
+
+                <h6 class="o-footer__matrix-title">{{group.title}}</h6>
+                <div class="o-footer__matrix-content">
+
+                    {% for item in group.items %}
+                    <a class="o-footer__matrix-link" href="{{item.href}}" target="_blank">{{item.text}}</a>
+                    {% endfor %}
+
+                </div>
+
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="o-footer__copyright">
+            <small>
+                © FT中文网 {{env.year}}.
+                <abbr title="Financial Times" aria-label="F T">FT</abbr> and ‘Financial Times’ are trademarks of The Financial Times Ltd.
+            </small>
+        </div>
+        <div class="text-muted pb-3">
+            <small>测试版 v{{env.version}}</small>
+        </div>
+    </div>
+</footer>
+
+{#
+<a href="{{ sitemap.feedback }}" class="feedback">
+    <span>建议反馈</span>
+</a>
+#}
+
+<div class="global-spinner">
+    <div class="spinner-border" role="status" aria-hidden="true">
+        <span class="sr-only">加载中...</span>
+    </div>
+</div>
+
+{% if env.isProduction %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap.native/2.0.23/bootstrap-native-v4.min.js"></script>
+{% include "assets/script.html" %}
+
+{% else %}
+<script src="/bootstrap.native/dist/bootstrap-native-v4.js"></script>
+<script src="/script/main.js"></script>
+{% endif %}
+</body>
+</html>

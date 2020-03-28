@@ -1,5 +1,11 @@
 package main
 
+import (
+	"os"
+	"path/filepath"
+	"text/template"
+)
+
 // Recursively get all file paths in directory, including sub-directories.
 func GetAllFilePathsInDirectory(dirPath string) ([]string, error) {
 	var paths []string
